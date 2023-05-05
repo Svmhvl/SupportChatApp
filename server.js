@@ -33,11 +33,13 @@ io.on('connection', socket =>  {
 
     //Listen for chatMessage
     socket.on('chatMessage', msg => {
-        io.emit('message', formatMessage('USER', msg));
+        const user = getCurrentUser(socket.id);
+        io.emit('message', formatMessage(user.username, msg));
     })
 
      //runs when clients disconnect
      socket.on('disconnect', () => {
+        
         io.emit('message', formatMessage(botName, `A user has left the chat`));
     });
 
